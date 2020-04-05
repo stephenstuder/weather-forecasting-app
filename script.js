@@ -7,7 +7,8 @@ $(document).ready(function(){
     //button listener
     $("#search-button").on("click", function(){
         location = $("#search-input").val();
-        let url = "http://api.openweathermap.org/data/2.5/weather?q=" + location +  "&APPID=" + key;
+        let url = "http://api.openweathermap.org/data/2.5/forecast?q=" + location +  "&appid=" + key;
+        //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
         appendButton();
         fillDashboard(url);
     })
@@ -23,7 +24,9 @@ function appendButton(){
            method : "GET"
        }).then(function(response){
            console.log(response);
-   
+            searchButton = $("<button>");
+            searchButton.append(response.city.name);
+            $("#button-append").append(searchButton);
    
        });
        
