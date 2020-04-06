@@ -34,6 +34,7 @@ $(document).ready(function(){
             url : url,
             method : "GET"
         }).then(function(response){
+            $("#append-weather-details").empty();
             let cityName = response.city.name;
             let currentTemp = response.list[0].main.temp;
             console.log(response.list[0].main);
