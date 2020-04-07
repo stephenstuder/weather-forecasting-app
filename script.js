@@ -6,10 +6,9 @@ $(document).ready(function(){
     //Create and Search
     $("#search-button").on("click", function(){
         location = $("#search-input").val();
-        let url = "https://api.openweathermap.org/data/2.5/forecast?q=" + location +  "&appid=" + key;
         //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
         createButton(location);
-        fillDashboard(url);
+        fillDashboard();
     });
 
     //Search with Existing Button
@@ -29,8 +28,9 @@ $(document).ready(function(){
     }
 
     //call API and build div
-    function fillDashboard(url){
-        currentWeather(url);
+    function fillDashboard(){
+        currentWeather();
+        getUVIndex()
         }
     
     
@@ -50,15 +50,15 @@ $(document).ready(function(){
             
             
             let windSpeed = response.wind.speed;
-            //  let lat = response.city.coord.lat;
-            //  let long = response.city.coord.lat;
+            let lat = response.coord.lat;
+            let lon = response.coord.lon;
             //  console.log(cityName, iconCode, iconUrl, currentTemp, currentHumidity, windSpeed, lat, long);
             let headlineDiv = $("<div>");
             headlineDiv.addClass("d-flex")
              let cityNameH2 = $("<h2>");
              cityNameH2.text("Current Weather for: " + cityName);
              $("#append-weather-details").append(headlineDiv);
-             console.log(today);
+             console.log(lat, lon);
              $(headlineDiv).append(cityNameH2);
              let currentWeatherIcon = $("<img>");
              currentWeatherIcon.attr("src", iconUrl);
@@ -73,20 +73,44 @@ $(document).ready(function(){
              currentWindSpeedP.text("Wind Speed: " + windSpeed + " MPH")
              $("#append-weather-details").append(currentWindSpeedP);
             //Build the button in then 'then' because i dont want buttons if the search fails
-            getFiveDayData(lat, long);
+           // getFiveDayData(lat, lon);
+           getFiveDayData();
+            getUVIndex(lat, lon);
+            console.log(location);
             
        });
     }
-    function getFiveDayData(lat, long){
+     function getFiveDayData(){
+         $.ajax({
+             url : "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&units=imperial&appid=" + key,
+             method : "GET"
+     }).then(function(response){
+         console.log(response);
+         for (let i = 0; i < 5; i++){
+             console.log(i);
+             let date = response.list[i].dt_txt;
+             let currentTemp = response.list[i].main.temp;
+             console.log(date);
+             let iconCode = response.list[i].weather[0].icon;
+             console.log(iconCode);
+             let currentHumidity = response.list[i].main.humidity;
+             console.log(currentTemp, currentHumidity);
+             let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
+         }
+        });
+     }
+    function getUVIndex(lat, lon){
         $.ajax({
-            url : "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + key,
+            url : "http://api.openweathermap.org/data/2.5/uvi/forecast?appid="+ key +"&&units=imperial&lat=" + lat + "&lon=" + lon + "&cnt=1",
             method : "GET"
         }).then(function(response){
-            console.log(response);
-            //  let currentTemp = response.list[0].main.temp;
-            //  let iconCode = response.list[0].weather[0].icon;
-            //  let currentHumidity = response.list[0].main.humidity;
-            //  let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
+            let UV = response[0].value;
+            console.log(UV);
+            let currentUVP = $("<p>")
+             currentUVP.text("UV Index: " + UV);
+             $("#append-weather-details").append(currentUVP);
+            
+             //if statements that color background
        });
     }
 
