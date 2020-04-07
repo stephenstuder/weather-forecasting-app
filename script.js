@@ -8,15 +8,14 @@ $(document).ready(function(){
         location = $("#search-input").val();
         //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={your api key}
         createButton(location);
-        fillDashboard();
+        fillDashboard(location);
     });
 
     //Search with Existing Button
     $("#button-append").on("click", "button", function(){
         let searchTerm = $(this).data("value");
-        let url = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=" + key;
-        console.log(searchTerm);
-        fillDashboard(url);
+        location = searchTerm;
+        fillDashboard(location);
     });
 
     function createButton(location){
@@ -28,13 +27,13 @@ $(document).ready(function(){
     }
 
     //call API and build div
-    function fillDashboard(){
-        currentWeather();
+    function fillDashboard(location){
+        currentWeather(location);
         getUVIndex()
         }
     
     
-    function currentWeather(url){
+    function currentWeather(location){
         $.ajax({
             url : "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&units=imperial&appid=" + key,
             method : "GET"
@@ -86,6 +85,11 @@ $(document).ready(function(){
              method : "GET"
      }).then(function(response){
          console.log(response);
+         $("#five-day-header").empty();
+         $("#five-day").empty();
+         let headerFiveDay = $("<h1>").text("5-Day Forecast");
+         headerFiveDay.addClass("p-1 text-light")
+         $("#five-day-header").append(headerFiveDay);
          for (let i = 0; i < 5; i++){
              console.log(i);
              let date = response.list[i].dt_txt;
@@ -96,6 +100,21 @@ $(document).ready(function(){
              let currentHumidity = response.list[i].main.humidity;
              console.log(currentTemp, currentHumidity);
              let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
+             let dailyDiv = $("<div>");
+             let dateP = $("<p>");
+             dateP.text(date);
+             dailyDiv.append(dateP);
+             let iconImg = $("<img>");
+             iconImg.attr("src", iconUrl);
+             dailyDiv.append(iconImg);
+             let tempP = $("<p>");
+             tempP.text(currentTemp);
+             dailyDiv.append(tempP);
+             let humidityP = $("<p>");
+             humidityP.text(currentHumidity);
+             dailyDiv.append(humidityP);
+             $("#five-day").append(dailyDiv);
+             dailyDiv.addClass(" bg-primary p-3 text-light rounded");
          }
         });
      }
