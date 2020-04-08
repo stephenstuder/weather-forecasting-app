@@ -18,3 +18,18 @@
     width: 100%;
     margin: 5px 0px;
 }
+.low {
+    background: #3EA72D;
+}
+.moderate {
+    background: #FFF300;    
+}
+.high {
+    background: #F18B00;    
+}
+.very-high {
+    background: #E53210;
+}
+.extreme {
+    background: #B567A4;
+}

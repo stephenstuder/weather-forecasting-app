@@ -73,15 +73,15 @@ $(document).ready(function(){
              $("#append-weather-details").append(currentWindSpeedP);
             //Build the button in then 'then' because i dont want buttons if the search fails
            // getFiveDayData(lat, lon);
-           getFiveDayData();
+           getFiveDayData(lat, lon);
             getUVIndex(lat, lon);
             console.log(location);
             
        });
     }
-     function getFiveDayData(){
+     function getFiveDayData(lat, lon){
          $.ajax({
-             url : "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&units=imperial&appid=" + key,
+             url : "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + key + "&units=imperial",
              method : "GET"
      }).then(function(response){
          console.log(response);
@@ -91,13 +91,13 @@ $(document).ready(function(){
          headerFiveDay.addClass("p-1 text-light")
          $("#five-day-header").append(headerFiveDay);
          for (let i = 0; i < 5; i++){
-             console.log(i);
-             let date = response.list[i].dt_txt;
-             let currentTemp = response.list[i].main.temp;
+            //  console.log(i);
+             let date = response.daily[i].dt;
+             let currentTemp = response.daily[i].temp.day;
              console.log(date);
-             let iconCode = response.list[i].weather[0].icon;
+             let iconCode = response.daily[i].weather[0].icon;
              console.log(iconCode);
-             let currentHumidity = response.list[i].main.humidity;
+             let currentHumidity = response.daily[i].humidity;
              console.log(currentTemp, currentHumidity);
              let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
              let dailyDiv = $("<div>");
@@ -114,7 +114,7 @@ $(document).ready(function(){
              humidityP.text(currentHumidity);
              dailyDiv.append(humidityP);
              $("#five-day").append(dailyDiv);
-             dailyDiv.addClass(" bg-primary p-3 text-light rounded");
+             dailyDiv.addClass(" bg-primary p-3 px-4 text-light rounded");
          }
         });
      }
@@ -125,9 +125,15 @@ $(document).ready(function(){
         }).then(function(response){
             let UV = response[0].value;
             console.log(UV);
+            let currentUVDiv = $("<div>")
             let currentUVP = $("<p>")
-             currentUVP.text("UV Index: " + UV);
-             $("#append-weather-details").append(currentUVP);
+            let currentUVSpan = $("<span>")
+             currentUVP.text("UV Index:  ");
+             currentUVSpan.text(UV);
+             currentUVDiv.addClass("d-flex");
+             currentUVDiv.append(currentUVP);
+             currentUVDiv.append(currentUVSpan);
+             $("#append-weather-details").append(currentUVDiv);
             
              //if statements that color background
        });
