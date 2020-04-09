@@ -130,7 +130,7 @@ $(document).ready(function(){
              currentUVP.text("UV Index: ");
              currentUVP.addClass("mb-0");
              currentUVSpan.text(UV);
-             currentUVSpan.addClass("mx-2 px-2 rounded high");
+             currentUVSpan.addClass("mx-2 px-2 rounded text-light");
              if (UV < 3){
                 currentUVSpan.addClass("low");
             } else if (UV >= 3 && UV < 6){
