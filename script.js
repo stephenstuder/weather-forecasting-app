@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     const key = "69a8c21b7273a586293ec934e4d677e9";
     let location = ""
     
@@ -75,7 +76,7 @@ $(document).ready(function(){
            // getFiveDayData(lat, lon);
            getFiveDayData(lat, lon);
             getUVIndex(lat, lon);
-            console.log(location);
+            
             
        });
     }
@@ -92,17 +93,18 @@ $(document).ready(function(){
          $("#five-day-header").append(headerFiveDay);
          for (let i = 0; i < 5; i++){
             //  console.log(i);
-             let date = response.daily[i].dt;
+             let date = new Date(response.daily[i].dt);
+             let dateFormatted = moment.unix(date).format("MM/DD/YYYY");
+             console.log(dateFormatted);
              let currentTemp = response.daily[i].temp.day;
-             console.log(date);
              let iconCode = response.daily[i].weather[0].icon;
-             console.log(iconCode);
+             
              let currentHumidity = response.daily[i].humidity;
-             console.log(currentTemp, currentHumidity);
+             
              let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
              let dailyDiv = $("<div>");
              let dateP = $("<p>");
-             dateP.text(date);
+             dateP.text(dateFormatted);
              dailyDiv.append(dateP);
              let iconImg = $("<img>");
              iconImg.attr("src", iconUrl);
@@ -137,6 +139,9 @@ $(document).ready(function(){
             
              //if statements that color background
        });
+    }
+    function convertToDate(unix){
+
     }
 
 });
