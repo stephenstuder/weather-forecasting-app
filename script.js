@@ -35,7 +35,6 @@ $(document).ready(function(){
     //call API and build div
     function fillDashboard(location){
         currentWeather(location);
-        getUVIndex()
         }
     
     function currentWeather(location){
