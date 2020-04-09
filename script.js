@@ -110,7 +110,7 @@ $(document).ready(function(){
     }
     function getUVIndex(lat, lon){
         $.ajax({
-            url : "http://api.openweathermap.org/data/2.5/uvi/forecast?appid="+ key +"&units=imperial&lat=" + lat + "&lon=" + lon,
+            url : "https://api.openweathermap.org/data/2.5/uvi/forecast?appid="+ key +"&units=imperial&lat=" + lat + "&lon=" + lon,
             method : "GET"
         }).then(function(response){
             let UV = response[0].value;
@@ -143,7 +143,6 @@ $(document).ready(function(){
     
     function addToLocalStorage (search){
     searchTerms.push(search);
-    console.log(searchTerms);
     localStorage.setItem("searches", JSON.stringify(searchTerms));
 }
 function init (){
