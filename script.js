@@ -42,7 +42,8 @@ $(document).ready(function(){
             console.log(response);
             $("#append-weather-details").empty();
             let cityName = response.name;
-            //  let date = 
+            let date = new Date(response.dt);
+            let dateFormatted = moment.unix(date).format("(MM/DD/YYYY)");
             let currentTemp = response.main.temp;
             let iconCode = response.weather[0].icon;
             let currentHumidity = response.main.humidity;
@@ -56,7 +57,7 @@ $(document).ready(function(){
             let headlineDiv = $("<div>");
             headlineDiv.addClass("d-flex")
              let cityNameH2 = $("<h2>");
-             cityNameH2.text("Current Weather for: " + cityName);
+             cityNameH2.text(cityName + " " + dateFormatted);
              $("#append-weather-details").append(headlineDiv);
              console.log(lat, lon);
              $(headlineDiv).append(cityNameH2);
@@ -88,8 +89,8 @@ $(document).ready(function(){
          console.log(response);
          $("#five-day-header").empty();
          $("#five-day").empty();
-         let headerFiveDay = $("<h1>").text("5-Day Forecast");
-         headerFiveDay.addClass("p-1 text-light")
+         let headerFiveDay = $("<h2>").text("5-Day Forecast");
+         headerFiveDay.addClass("py-2 mb-0 mt-2 text-light")
          $("#five-day-header").append(headerFiveDay);
          for (let i = 1; i < 6; i++){
             //  console.log(i);
@@ -100,6 +101,7 @@ $(document).ready(function(){
              let currentHumidity = response.daily[i].humidity;
              let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
              let dailyDiv = $("<div>");
+             dailyDiv.addClass("my-3")
              let dateh5 = $("<h5>");
              dateh5.text(dateFormatted);
              dailyDiv.append(dateh5);

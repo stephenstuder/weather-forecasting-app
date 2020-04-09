@@ -1,35 +1,45 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+header {
+  font-family: "Open Sans", sans-serif;
+}
+
 .flex-one {
-    flex:1;
+  flex: 1;
 }
 .flex-two {
-    flex:2;
+  flex: 2;
 }
 .flex-three {
-    flex:3;
+  flex: 3;
 }
 .search {
-    width: 100%;
+  width: 100%;
 }
 .search-button {
-    width:100%;
-    margin: 5px 0px;
+  width: 100%;
+  margin: 5px 0px;
 }
 #button-append {
-    width: 100%;
-    margin: 5px 0px;
+  width: 100%;
+  margin: 5px 0px;
 }
 .low {
-    background: #3EA72D;
+  background: #3ea72d;
 }
 .moderate {
-    background: #FFF300;    
+  background: #fff300;
 }
 .high {
-    background: #F18B00;    
+  background: #f18b00;
 }
 .very-high {
-    background: #E53210;
+  background: #e53210;
 }
 .extreme {
-    background: #B567A4;
+  background: #b567a4;
+}
+h1 {
+  font-size: 3rem;
 }
