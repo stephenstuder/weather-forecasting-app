@@ -64,7 +64,7 @@ $(document).ready(function(){
              currentWeatherIcon.attr("src", iconUrl);
              $(headlineDiv).append(currentWeatherIcon);
              let currentTempP = $("<p>")
-             currentTempP.text("Temperature: " + currentTemp)
+             currentTempP.text("Temperature: " + currentTemp + "°F")
              $("#append-weather-details").append(currentTempP);
              let currentHumidityP = $("<p>")
              currentHumidityP.text("Humidity: " + currentHumidity + "%")
@@ -91,29 +91,26 @@ $(document).ready(function(){
          let headerFiveDay = $("<h1>").text("5-Day Forecast");
          headerFiveDay.addClass("p-1 text-light")
          $("#five-day-header").append(headerFiveDay);
-         for (let i = 0; i < 5; i++){
+         for (let i = 1; i < 6; i++){
             //  console.log(i);
              let date = new Date(response.daily[i].dt);
              let dateFormatted = moment.unix(date).format("MM/DD/YYYY");
-             console.log(dateFormatted);
-             let currentTemp = response.daily[i].temp.day;
+             let currentTemp = response.daily[i].temp.max;
              let iconCode = response.daily[i].weather[0].icon;
-             
              let currentHumidity = response.daily[i].humidity;
-             
              let iconUrl ="http://openweathermap.org/img/w/" + iconCode + ".png";
              let dailyDiv = $("<div>");
-             let dateP = $("<p>");
-             dateP.text(dateFormatted);
-             dailyDiv.append(dateP);
+             let dateh5 = $("<h5>");
+             dateh5.text(dateFormatted);
+             dailyDiv.append(dateh5);
              let iconImg = $("<img>");
              iconImg.attr("src", iconUrl);
              dailyDiv.append(iconImg);
              let tempP = $("<p>");
-             tempP.text(currentTemp);
+             tempP.text("Temp: " + currentTemp + "°F");
              dailyDiv.append(tempP);
              let humidityP = $("<p>");
-             humidityP.text(currentHumidity);
+             humidityP.text("Humidity: " + currentHumidity + "%");
              dailyDiv.append(humidityP);
              $("#five-day").append(dailyDiv);
              dailyDiv.addClass(" bg-primary p-3 px-4 text-light rounded");
@@ -130,8 +127,21 @@ $(document).ready(function(){
             let currentUVDiv = $("<div>")
             let currentUVP = $("<p>")
             let currentUVSpan = $("<span>")
-             currentUVP.text("UV Index:  ");
+             currentUVP.text("UV Index: ");
+             currentUVP.addClass("mb-0");
              currentUVSpan.text(UV);
+             currentUVSpan.addClass("mx-2 px-2 rounded high");
+             if (UV < 3){
+                currentUVSpan.addClass("low");
+            } else if (UV >= 3 && UV < 6){
+                currentUVSpan.addClass("moderate");
+             } else if (UV >= 6 && UV < 8){
+                currentUVSpan.addClass("high");
+             } else if (UV >= 8 && UV < 11){
+                currentUVSpan.addClass("very-high");
+             } else {
+                currentUVSpan.addClass("extreme");
+             }
              currentUVDiv.addClass("d-flex");
              currentUVDiv.append(currentUVP);
              currentUVDiv.append(currentUVSpan);
@@ -139,9 +149,6 @@ $(document).ready(function(){
             
              //if statements that color background
        });
-    }
-    function convertToDate(unix){
-
     }
 
 });
