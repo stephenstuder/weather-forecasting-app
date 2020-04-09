@@ -115,7 +115,7 @@ $(document).ready(function(){
              humidityP.text("Humidity: " + currentHumidity + "%");
              dailyDiv.append(humidityP);
              $("#five-day").append(dailyDiv);
-             dailyDiv.addClass(" bg-primary p-3 px-4 text-light rounded");
+             dailyDiv.addClass(" blue p-3 px-4 text-light rounded");
          }
         });
      }

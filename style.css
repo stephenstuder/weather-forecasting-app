@@ -41,5 +41,8 @@ header {
   background: #b567a4;
 }
 h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
+}
+.blue {
+    background: #1EA6C6
 }
