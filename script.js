@@ -11,6 +11,12 @@ $(document).ready(function(){
         createButton(location);
         fillDashboard(location);
     });
+    $('.input-group').keypress(function(e){
+        if(e.which == 13){//Enter key pressed
+            $('#search-button').click();//Trigger search button click event
+        }
+    });
+
 
     //Search with Existing Button
     $("#button-append").on("click", "button", function(){
@@ -58,6 +64,7 @@ $(document).ready(function(){
             headlineDiv.addClass("d-flex")
              let cityNameH2 = $("<h2>");
              cityNameH2.text(cityName + " " + dateFormatted);
+             cityNameH2.addClass("my-3");
              $("#append-weather-details").append(headlineDiv);
              console.log(lat, lon);
              $(headlineDiv).append(cityNameH2);
