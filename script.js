@@ -25,7 +25,10 @@ $(document).ready(function(){
         location = searchTerm;
         fillDashboard(location);
     });
-    
+    $("#clear-button-history").on("click", function(){
+        $("#button-append").empty();
+        localStorage.clear();
+    })
     
     //call API and build div
     function fillDashboard(location){
