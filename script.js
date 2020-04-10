@@ -60,6 +60,7 @@ $(document).ready(function(){
              $(headlineDiv).append(cityNameH2);
              let currentWeatherIcon = $("<img>");
              currentWeatherIcon.attr("src", iconUrl);
+             currentWeatherIcon.attr("style", "width: 4rem; height: 4rem;");
              $(headlineDiv).append(currentWeatherIcon);
              let currentTempP = $("<p>")
              currentTempP.text("Temperature: " + currentTemp + "°F")
